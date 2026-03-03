@@ -3,57 +3,429 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; script-src 'unsafe-inline'; form-action 'none';">
+    <meta name="referrer" content="no-referrer">
     <title>Support — Burn</title>
     <style>
-        body { font-family: -apple-system, system-ui, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; color: #333; line-height: 1.6; }
-        h1 { font-size: 1.8em; }
-        h2 { font-size: 1.2em; margin-top: 2em; }
-        .faq { background: #f5f5f7; padding: 16px 20px; border-radius: 12px; margin: 12px 0; }
-        .faq strong { display: block; margin-bottom: 4px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #140F1F;
+            color: rgba(255, 255, 255, 0.87);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 500px;
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255, 140, 38, 0.07) 0%,
+                rgba(255, 100, 20, 0.03) 40%,
+                transparent 70%
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 48px 20px 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+        }
+
+        header h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.95em;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        nav a:hover {
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        nav a.active {
+            color: #FF8C26;
+            background: rgba(255, 140, 38, 0.1);
+        }
+
+        main {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 2em;
+            margin-bottom: 0.8em;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+        }
+
+        .card strong {
+            display: block;
+            color: #fff;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+
+        .card p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        a {
+            color: #FF8C26;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #FFB366;
+        }
+
+        .contact {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95em;
+        }
+
+        /* Feedback form */
+        .feedback-section {
+            background: rgba(255, 140, 38, 0.06);
+            border: 1px solid rgba(255, 140, 38, 0.15);
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin-bottom: 12px;
+        }
+
+        .feedback-section h2 {
+            margin-top: 0;
+            color: #fff;
+            font-size: 1.2em;
+            margin-bottom: 4px;
+        }
+
+        .feedback-section .feedback-desc {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .feedback-section label {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85em;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .feedback-section select,
+        .feedback-section textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.87);
+            font-family: inherit;
+            font-size: 0.9em;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .feedback-section select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23ffffff60' d='M1.4 0L6 4.6 10.6 0 12 1.4l-6 6-6-6z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        .feedback-section select:focus,
+        .feedback-section textarea:focus {
+            outline: none;
+            border-color: rgba(255, 140, 38, 0.4);
+        }
+
+        .feedback-section textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .feedback-section textarea::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #FF8C26;
+            color: #140F1F;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 24px;
+            font-family: inherit;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .submit-btn:hover {
+            background: #FFa040;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        footer {
+            text-align: center;
+            padding: 32px 20px;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.85em;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        footer a:hover {
+            color: #FF8C26;
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 32px 16px 24px; }
+            main { padding: 0 16px 32px; }
+            .app-icon { width: 56px; height: 56px; border-radius: 14px; }
+            header h1 { font-size: 1.5em; }
+        }
     </style>
 </head>
 <body>
-    <h1>Burn Support</h1>
-    <p>Need help? Check the common questions below or contact us directly.</p>
+    <header>
+        <img src="assets/AppIcon.png" alt="Burn app icon" class="app-icon">
+        <h1>Burn</h1>
+        <p class="subtitle">Need help? Check out the common questions below.</p>
+        <nav>
+            <a href="support.html" class="active">Support</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </nav>
+    </header>
 
-    <h2>FAQ</h2>
+    <main>
+        <div class="feedback-section">
+            <h2>Send us feedback</h2>
+            <p class="feedback-desc">Found a bug? Have a feature idea? We'd love to hear from you.</p>
 
-    <div class="faq">
-        <strong>How does Burn work?</strong>
-        Burn gives you a daily screen time allowance for selected apps. As you use those apps, your time depletes. Complete tasks to earn logs, then feed them to your flame to restore screen time. When you hit zero, your apps get blocked until you earn more.
-    </div>
+            <label for="feedback-type">What's this about?</label>
+            <select id="feedback-type">
+                <option value="Bug Report">Bug Report</option>
+                <option value="Feature Request">Feature Request</option>
+                <option value="Feedback">General Feedback</option>
+            </select>
 
-    <div class="faq">
-        <strong>What are logs and how do I use them?</strong>
-        Logs are earned by completing tasks. Drag your collected logs into the flame to convert them into screen time — each log restores 10 minutes.
-    </div>
+            <!-- Honeypot: invisible to humans, bots auto-fill this -->
+            <input type="text" id="website" name="website" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden;">
 
-    <div class="faq">
-        <strong>How do I select which apps to block?</strong>
-        Use the app picker during onboarding or in Settings to choose the apps you want managed. You can update your selection at any time.
-    </div>
+            <label for="feedback-message">Tell us more</label>
+            <textarea id="feedback-message" maxlength="2000" placeholder="Describe the bug, your idea, or any feedback you have..."></textarea>
 
-    <div class="faq">
-        <strong>Why does Burn need Screen Time permission?</strong>
-        Burn uses Apple's FamilyControls API to monitor app usage and manage blocking. This permission is required for the app to function. Your data stays on your device.
-    </div>
+            <button class="submit-btn" id="send-btn">Send Feedback</button>
+            <p id="form-status" style="margin-top:10px;font-size:0.85em;display:none;"></p>
+        </div>
 
-    <div class="faq">
-        <strong>My apps aren't unblocking after feeding logs.</strong>
-        Make sure you've dragged logs into the flame and your screen time balance is above zero. If the issue persists, try restarting the app or re-granting Screen Time permission in Settings.
-    </div>
+        <h2>How it works</h2>
 
-    <div class="faq">
-        <strong>When does my screen time reset?</strong>
-        Your screen time balance resets daily at midnight. Unused time does not carry over to the next day.
-    </div>
+        <div class="card">
+            <strong>How does Burn work?</strong>
+            <p>Burn gives you a daily screen time allowance for the apps you choose. Your daily baseline is configurable from 10 to 480 minutes. As you use those apps, your time ticks down. When it hits zero, those apps get blocked. Complete tasks to earn logs, then drag them into your flame to restore screen time.</p>
+        </div>
 
-    <div class="faq">
-        <strong>Is my data private?</strong>
-        Yes. All data is stored locally on your device. We collect nothing. See our <a href="privacy.html">Privacy Policy</a>.
-    </div>
+        <div class="card">
+            <strong>What are logs and how do I use them?</strong>
+            <p>Logs are earned by completing tasks. Drag your collected logs into the flame to convert them into screen time. By default each log restores 10 minutes, but you can change how much each log is worth in Settings (anywhere from 1 to 60 minutes).</p>
+        </div>
 
-    <h2>Contact Us</h2>
-    <p>Still need help? Email us at <a href="mailto:ravinlabsdev@gmail.com">ravinlabsdev@gmail.com</a> and we'll get back to you.</p>
+        <div class="card">
+            <strong>When does my screen time reset?</strong>
+            <p>Your screen time balance resets daily at midnight. Unused time does not carry over to the next day.</p>
+        </div>
+
+        <h2>Settings & customization</h2>
+
+        <div class="card">
+            <strong>How do I select which apps to manage?</strong>
+            <p>Use the app picker during onboarding or in Settings to choose the apps you want managed. You can update your selection at any time — just tap the app list in Settings.</p>
+        </div>
+
+        <div class="card">
+            <strong>How do I change my daily screen time or minutes per log?</strong>
+            <p>Open Settings from the gear icon on the main screen. From there you can adjust your daily screen time baseline (10–480 minutes), how many logs each task earns (1–6), and how many minutes each log is worth (1–60 minutes).</p>
+        </div>
+
+        <div class="card">
+            <strong>How do I customize my flame?</strong>
+            <p>Burn comes with 6 flame color variants: Fire (the default orange), Pink, Blue, Green, Purple, and White. Pick your favorite in Settings — it changes the flame, the accent color throughout the app, and even the app icon on your home screen.</p>
+        </div>
+
+        <h2>Features</h2>
+
+        <div class="card">
+            <strong>How do recurring tasks work?</strong>
+            <p>When creating a task, you can set it to repeat on a schedule: Daily, Weekdays (Mon–Fri), or Custom (pick specific days of the week). Recurring tasks automatically respawn each day they're scheduled, so you always have fresh tasks to earn logs from.</p>
+        </div>
+
+        <div class="card">
+            <strong>What do the widgets show?</strong>
+            <p>Burn has home screen and lock screen widgets. The home screen widgets include a small flame status widget showing your remaining time, and a medium or large task widget where you can check off today's tasks right from your home screen. Lock screen widgets show your fuel level as a circular gauge, a progress bar, or an inline readout.</p>
+        </div>
+
+        <div class="card">
+            <strong>Why does Burn look different at night?</strong>
+            <p>Between 10 PM and 5 AM, Burn switches to night mode. Your flame gets a sleepy face with little ZZZ particles floating around. It's a cozy reminder to wind down for the night.</p>
+        </div>
+
+        <h2>Troubleshooting</h2>
+
+        <div class="card">
+            <strong>Why does Burn need Screen Time permission?</strong>
+            <p>Burn uses Apple's FamilyControls API to monitor app usage and manage blocking. This permission is required for the app to function. Your data stays entirely on your device.</p>
+        </div>
+
+        <div class="card">
+            <strong>My apps aren't unblocking after feeding logs.</strong>
+            <p>Make sure you've dragged logs into the flame and your screen time balance is above zero. If the issue persists, try restarting the app or re-granting Screen Time permission in Settings.</p>
+        </div>
+
+        <div class="card">
+            <strong>Is my data private?</strong>
+            <p>Yes. All data is stored locally on your device. We collect nothing. See our <a href="privacy.html">Privacy Policy</a>.</p>
+        </div>
+
+        <h2>Still need help?</h2>
+        <p class="contact">Reach out at <a href="mailto:ravinlabsdev@gmail.com">ravinlabsdev@gmail.com</a> and we'll get back to you.</p>
+    </main>
+
+    <footer>
+        <p>Burn &mdash; <a href="mailto:ravinlabsdev@gmail.com">ravinlabsdev@gmail.com</a></p>
+    </footer>
+
+    <script>
+        (function() {
+            var RATE_LIMIT_MS = 60000;
+            var ALLOWED_TYPES = ['Bug Report', 'Feature Request', 'Feedback'];
+            var MAX_LENGTH = 2000;
+
+            function stripHtml(str) {
+                var tmp = document.createElement('div');
+                tmp.textContent = str;
+                return tmp.textContent;
+            }
+
+            function showStatus(msg, isError) {
+                var el = document.getElementById('form-status');
+                el.textContent = msg;
+                el.style.display = 'block';
+                el.style.color = isError ? 'rgba(255, 100, 80, 0.8)' : 'rgba(255, 255, 255, 0.5)';
+            }
+
+            document.getElementById('send-btn').addEventListener('click', function() {
+                // Honeypot check — bots fill hidden fields
+                if (document.getElementById('website').value) { return; }
+
+                // Rate limiting
+                var lastSent = localStorage.getItem('burn_feedback_ts');
+                if (lastSent && (Date.now() - parseInt(lastSent, 10)) < RATE_LIMIT_MS) {
+                    var secsLeft = Math.ceil((RATE_LIMIT_MS - (Date.now() - parseInt(lastSent, 10))) / 1000);
+                    showStatus('Please wait ' + secsLeft + 's before sending again.', true);
+                    return;
+                }
+
+                // Validate type
+                var type = document.getElementById('feedback-type').value;
+                if (ALLOWED_TYPES.indexOf(type) === -1) { return; }
+
+                // Validate and sanitize message
+                var rawMessage = document.getElementById('feedback-message').value.trim();
+                if (!rawMessage) {
+                    document.getElementById('feedback-message').style.borderColor = 'rgba(255, 100, 80, 0.5)';
+                    document.getElementById('feedback-message').focus();
+                    showStatus('Please describe your feedback before sending.', true);
+                    return;
+                }
+
+                var message = stripHtml(rawMessage).substring(0, MAX_LENGTH);
+
+                // Record timestamp for rate limiting
+                localStorage.setItem('burn_feedback_ts', Date.now().toString());
+
+                // Compose and open mailto
+                var subject = encodeURIComponent('[Burn] ' + type);
+                var body = encodeURIComponent(message);
+                window.location.href = 'mailto:ravinlabsdev@gmail.com?subject=' + subject + '&body=' + body;
+
+                showStatus('Opening your email app...', false);
+            });
+        })();
+    </script>
 </body>
 </html>
