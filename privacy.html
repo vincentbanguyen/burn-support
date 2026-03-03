@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; script-src 'none'; form-action 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; script-src 'unsafe-inline'; form-action 'none';">
     <meta name="referrer" content="no-referrer">
     <title>Privacy Policy — Burn</title>
     <style>
@@ -218,12 +218,30 @@
 
         <h2>Contact</h2>
         <div class="card">
-            <p>Questions? Reach us at <a href="mailto:ravinlabsdev@gmail.com">ravinlabsdev@gmail.com</a></p>
+            <p>Questions? Reach us at <span id="contact-email"></span></p>
         </div>
     </main>
 
     <footer>
-        <p>Burn &mdash; <a href="mailto:ravinlabsdev@gmail.com">ravinlabsdev@gmail.com</a></p>
+        <p>Burn &mdash; <span id="footer-email"></span></p>
     </footer>
+
+    <script>
+        (function() {
+            var _u = 'ravinlabsdev';
+            var _d = 'gmail.com';
+            var _e = _u + '@' + _d;
+            function makeEmailLink() {
+                var a = document.createElement('a');
+                a.href = 'mailto:' + _e;
+                a.textContent = _e;
+                return a;
+            }
+            var contactEl = document.getElementById('contact-email');
+            if (contactEl) contactEl.appendChild(makeEmailLink());
+            var footerEl = document.getElementById('footer-email');
+            if (footerEl) footerEl.appendChild(makeEmailLink());
+        })();
+    </script>
 </body>
 </html>
