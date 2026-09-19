@@ -163,7 +163,7 @@
     <header>
         <img src="assets/AppIcon.png" alt="Burn app icon" class="app-icon">
         <h1>Burn</h1>
-        <p class="subtitle">Last updated: March 12, 2026</p>
+        <p class="subtitle">Last updated: September 18, 2026</p>
         <nav>
             <a href="support.html">Support</a>
             <a href="privacy.html" class="active">Privacy Policy</a>
@@ -173,12 +173,13 @@
     <main>
         <h2>Overview</h2>
         <div class="card">
-            <p>Burn is designed with your privacy in mind. We do not collect, store, or transmit any personal data.</p>
+            <p>Burn is designed with your privacy in mind. We do not collect or store any personal data, and we have no accounts &mdash; you never sign in. Your tasks, screen time, and settings live only on your device.</p>
+            <p style="margin-top:12px;">There is exactly one exception, and it is opt-in by virtue of being a Burn+ feature: the Dynamic Island Live Activity. Keeping it up to date requires sending a small, anonymous message off your device. It is described in full below.</p>
         </div>
 
         <h2>Data Storage</h2>
         <div class="card">
-            <p>All data — including your tasks, screen time balance, flame preferences, and app blocking settings — is stored locally on your device within an app group container. This shared container allows the main app, the device activity extension, and widgets to stay in sync. Nothing is sent to external servers.</p>
+            <p>All data — including your tasks, screen time balance, flame preferences, and app blocking settings — is stored locally on your device within an app group container. This shared container allows the main app, the device activity extension, and widgets to stay in sync. Nothing in it is uploaded, backed up to our servers, or shared with anyone.</p>
         </div>
 
         <h2>No Analytics</h2>
@@ -188,12 +189,23 @@
 
         <h2>Screen Time & App Blocking</h2>
         <div class="card">
-            <p>Burn uses Apple's FamilyControls, ManagedSettings, and DeviceActivity APIs to monitor usage and block apps on your device. All data is managed locally through Apple's frameworks. We never have access to your app usage data or Screen Time information.</p>
+            <p>Burn uses Apple's FamilyControls, ManagedSettings, and DeviceActivity APIs to monitor usage and block apps on your device. All of this is managed locally through Apple's frameworks.</p>
+            <p style="margin-top:12px;">We never see which apps you use, how long you spend in any particular app, or any of your Screen Time history. Apple's APIs are built so that even Burn cannot read those details &mdash; the app only ever learns how many minutes you have left in total.</p>
         </div>
 
         <h2>Widgets</h2>
         <div class="card">
             <p>Burn offers home screen and lock screen widgets that display your flame status and tasks. These widgets read data from the same local app group container used by the main app. No data leaves your device.</p>
+        </div>
+
+        <h2>Dynamic Island (Live Activity)</h2>
+        <div class="card">
+            <p>Burn+ includes a Live Activity that shows your remaining screen time as a ring in the Dynamic Island and on the Lock Screen. Because of how iOS works, this is the one part of Burn that needs a network connection.</p>
+            <p style="margin-top:12px;">iOS does not allow an app to update a Live Activity while you are using a different app. The only supported way is an Apple Push Notification. So when your remaining time changes, Burn sends a short message to a small relay we operate, which immediately asks Apple to update the ring on your device.</p>
+            <p style="margin-top:12px;"><strong>What is sent:</strong> a push token issued by Apple that identifies only that one Live Activity on that one device, the number of minutes you have left, your total minutes for the day, whether you have run out, and whether you have any logs saved up.</p>
+            <p style="margin-top:12px;"><strong>What is never sent:</strong> your name, email, or any account &mdash; Burn has none. No device identifier. No list of which apps you block or use. No tasks. No history. Nothing that identifies you.</p>
+            <p style="margin-top:12px;"><strong>What happens to it:</strong> the relay passes the message straight to Apple and keeps no copy. It has no database and no record of you. The relay runs on Supabase, and delivery is handled by Apple's Push Notification service.</p>
+            <p style="margin-top:12px;">This only happens if you have Burn+ and a Live Activity is running. Turning off Live Activities for Burn in iOS Settings stops it entirely, and the rest of the app continues to work exactly as before, fully on-device.</p>
         </div>
 
         <h2>Notifications</h2>
