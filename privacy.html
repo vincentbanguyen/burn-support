@@ -163,7 +163,7 @@
     <header>
         <img src="assets/AppIcon.png" alt="Burn app icon" class="app-icon">
         <h1>Burn</h1>
-        <p class="subtitle">Last updated: September 18, 2026</p>
+        <p class="subtitle">Last updated: September 23, 2026</p>
         <nav>
             <a href="support.html">Support</a>
             <a href="privacy.html" class="active">Privacy Policy</a>
@@ -179,7 +179,8 @@
 
         <h2>Data Storage</h2>
         <div class="card">
-            <p>All data — including your tasks, screen time balance, flame preferences, and app blocking settings — is stored locally on your device within an app group container. This shared container allows the main app, the device activity extension, and widgets to stay in sync. Nothing in it is uploaded, backed up to our servers, or shared with anyone.</p>
+            <p>All data, including your tasks, screen time balance, flame preferences, and app blocking settings, is stored locally on your device within an app group container. This shared container allows the main app, its extensions, and widgets to stay in sync. Nothing in it is uploaded, backed up to our servers, or shared with anyone.</p>
+            <p style="margin-top:12px;">Burn also keeps a short daily journal on your device: for each day, your daily screen time budget, the minutes you earned back with logs, the minutes you used, and how much was left at midnight. It holds up to 400 days and contains no app names. It powers the Month view and streaks, and it never leaves your device.</p>
         </div>
 
         <h2>No Analytics</h2>
@@ -190,7 +191,13 @@
         <h2>Screen Time & App Blocking</h2>
         <div class="card">
             <p>Burn uses Apple's FamilyControls, ManagedSettings, and DeviceActivity APIs to monitor usage and block apps on your device. All of this is managed locally through Apple's frameworks.</p>
-            <p style="margin-top:12px;">We never see which apps you use, how long you spend in any particular app, or any of your Screen Time history. Apple's APIs are built so that even Burn cannot read those details &mdash; the app only ever learns how many minutes you have left in total.</p>
+            <p style="margin-top:12px;">We never see which apps you use, how long you spend in any particular app, or any of your Screen Time history. Nothing about your app usage is ever sent anywhere.</p>
+        </div>
+
+        <h2>Screen Time Insights</h2>
+        <div class="card">
+            <p>Burn+ includes Screen Time Insights, which shows how much time you spent in the apps Burn watches, hour by hour and day by day, for about the last month.</p>
+            <p style="margin-top:12px;">Those details are drawn on your screen by Apple's own Screen Time report system, in a protected space that Burn's app cannot read from. Apple blocks that space from saving, sharing, or sending anything, so your per-app usage stays with Apple's Screen Time on your device. Burn can show it to you, but can't keep it or pass it on.</p>
         </div>
 
         <h2>Widgets</h2>
