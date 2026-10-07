@@ -163,7 +163,7 @@
     <header>
         <img src="assets/AppIcon.png" alt="Burn app icon" class="app-icon">
         <h1>Burn</h1>
-        <p class="subtitle">Last updated: September 23, 2026</p>
+        <p class="subtitle">Last updated: October 6, 2026</p>
         <nav>
             <a href="support.html">Support</a>
             <a href="privacy.html" class="active">Privacy Policy</a>
@@ -173,13 +173,13 @@
     <main>
         <h2>Overview</h2>
         <div class="card">
-            <p>Burn is designed with your privacy in mind. We do not collect or store any personal data, and we have no accounts &mdash; you never sign in. Your tasks, screen time, and settings live only on your device.</p>
-            <p style="margin-top:12px;">There is exactly one exception, and it is opt-in by virtue of being a Burn+ feature: the Dynamic Island Live Activity. Keeping it up to date requires sending a small, anonymous message off your device. It is described in full below.</p>
+            <p>Burn is designed with your privacy in mind. We do not collect or store any personal data, and we have no accounts &mdash; you never sign in to Burn. Your tasks, screen time, and settings live only on your device.</p>
+            <p style="margin-top:12px;">There are two exceptions, both described in full below. Duo, which you only use if you choose to share Burn with a partner, syncs through your own iCloud account. And a few features (the Dynamic Island Live Activity, widgets, and Duo) send small, anonymous messages through a relay we operate so your phone can be updated in the background. We never keep a copy of anything.</p>
         </div>
 
         <h2>Data Storage</h2>
         <div class="card">
-            <p>All data, including your tasks, screen time balance, flame preferences, and app blocking settings, is stored locally on your device within an app group container. This shared container allows the main app, its extensions, and widgets to stay in sync. Nothing in it is uploaded, backed up to our servers, or shared with anyone.</p>
+            <p>All data, including your tasks, screen time balance, flame preferences, and app blocking settings, is stored locally on your device within an app group container. This shared container allows the main app, its extensions, and widgets to stay in sync. Nothing in it is uploaded to our servers or shared with anyone. If you join a Duo, only the details listed under Duo below are shared with your partner, through iCloud.</p>
             <p style="margin-top:12px;">Burn also keeps a short daily journal on your device: for each day, your daily screen time budget, the minutes you earned back with logs, the minutes you used, and how much was left at midnight. It holds up to 400 days and contains no app names. It powers the Month view and streaks, and it never leaves your device.</p>
         </div>
 
@@ -191,7 +191,7 @@
         <h2>Screen Time & App Blocking</h2>
         <div class="card">
             <p>Burn uses Apple's FamilyControls, ManagedSettings, and DeviceActivity APIs to monitor usage and block apps on your device. All of this is managed locally through Apple's frameworks.</p>
-            <p style="margin-top:12px;">We never see which apps you use, how long you spend in any particular app, or any of your Screen Time history. Nothing about your app usage is ever sent anywhere.</p>
+            <p style="margin-top:12px;">We never see which apps you use, how long you spend in any particular app, or any of your Screen Time history. Burn can't tell which apps you use either: Apple only gives it anonymous tokens. In a Duo, your partner sees your total minutes for the day and the minutes in each app group you've named, never which apps.</p>
         </div>
 
         <h2>Screen Time Insights</h2>
@@ -202,7 +202,8 @@
 
         <h2>Widgets</h2>
         <div class="card">
-            <p>Burn offers home screen and lock screen widgets that display your flame status and tasks. These widgets read data from the same local app group container used by the main app. No data leaves your device.</p>
+            <p>Burn offers home screen and lock screen widgets that display your flame status and tasks. These widgets read data from the same local app group container used by the main app.</p>
+            <p style="margin-top:12px;">iOS doesn't always let Burn refresh its widgets from the background, so when your fuel changes Burn may ask our relay to send Apple a "please refresh" push. That message contains only a push token issued by Apple for Burn's widgets and whether it's a test build. The push itself carries no data; the widget re-reads your device's own storage.</p>
         </div>
 
         <h2>Dynamic Island (Live Activity)</h2>
@@ -215,9 +216,19 @@
             <p style="margin-top:12px;">This only happens if you have Burn+ and a Live Activity is running. Turning off Live Activities for Burn in iOS Settings stops it entirely, and the rest of the app continues to work exactly as before, fully on-device.</p>
         </div>
 
+        <h2>Duo</h2>
+        <div class="card">
+            <p>Duo lets two people share one screen time budget. It's entirely optional, and if you never invite or join a partner, nothing on this page about Duo applies to you.</p>
+            <p style="margin-top:12px;"><strong>Where it lives:</strong> in Apple's iCloud. The Duo is stored in the private iCloud database of the person who sent the invite and shared with the partner using Apple's iCloud sharing. You need to be signed in to iCloud to use it. We don't run a server for it, have no copy of it, and can't read it. Apple's iCloud terms and privacy policy apply to that storage.</p>
+            <p style="margin-top:12px;"><strong>What your partner sees:</strong> your first name, your Duo photo if you add one, your flame color, the shared daily goal, how many minutes you've used and earned today, how many logs you have, your streak, the names and minutes of the app groups you set up, and the tasks in lists you choose to share. To-do lists stay private unless you share them. Burn also stores the push tokens your partner's phone needs to update yours.</p>
+            <p style="margin-top:12px;"><strong>Photo:</strong> you can take a photo, pick one from your library, or use a Memoji. Burn only asks for Camera access if you choose "Take photo", and only the photo you pick is used.</p>
+            <p style="margin-top:12px;"><strong>Background updates:</strong> when something changes, like your partner adding a task to a shared list, your partner's phone asks our relay to send a silent push to yours. That message contains only a push token issued by Apple for your device, whether it's a test build, and a single word for what changed (for example "lists"). The task itself never goes through the relay: your phone fetches it from iCloud and shows the notification itself.</p>
+            <p style="margin-top:12px;"><strong>Leaving:</strong> either person can leave the Duo in Settings. Leaving ends the sharing for both of you, and the Duo's data is deleted from the inviter's iCloud: right away if the inviter leaves, or the next time Burn runs on the inviter's phone if the partner leaves.</p>
+        </div>
+
         <h2>Notifications</h2>
         <div class="card">
-            <p>If you enable notifications, they are scheduled locally on your device using iOS notification services. No notification data is sent externally.</p>
+            <p>If you enable notifications, they are created on your device using iOS notification services. Duo notifications (like "Alex added a task") are also created on your device, after it fetches the change from iCloud. No notification text is sent through our relay.</p>
         </div>
 
         <h2>App Store Review Prompt</h2>
